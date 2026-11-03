@@ -1,0 +1,49 @@
+{
+  "id": "ns-002",
+  "slug": "maison-ikkoku",
+  "title": "Maison Ikkoku",
+  "original": "Maison Ikkoku",
+  "aliases": ["Tsuki Station"],
+  "description": "Saat Tepesi kasabasında, Maison Ikkoku adında eski bir pansiyon bulunmaktadır. Pansiyonun kendisi oldukça normal olmasına rağmen, sakinlerinin çoğu normal değildir. Pansiyonun en sessiz kiracısı olan Yuusaku Godai, komşularının sürekli olarak rahatsızlık vermesi ve şiddetli partileri nedeniyle artık dayanamaz. Evim diyebileceği daha sakin bir yer aramak ister ki bu sayede huzurlu bir şekilde çalışabilsin. Bu nedenle taşınmak için hazırlıklara başlar. Ancak, ayrılma planları aniden yeni yatılı ev yöneticisi Kyoko Otonashi ile karşılaştığında bozulur. Ona deli gibi aşık olur ve sonrasında pansiyonun sonuçta o kadar da kötü bir yer olmadığına karar verir. Ne yazık ki onun için, Kyoko'nun kendine has romantik sorunları vardır: kendisi, kocası daha 6 ay önce ölmüş bir duldur. Ve Godai yeşeren duygularına rağmen, Kyoto ölen kocasının hatırasıyla yaşamaktadır ve başka kimsenin kalbindeki boşluğu doldurabileceğine inanmaz. Ancak Godai'nin ısrarı ve diğer tuhaf kiracıların yardımı ile bir kez daha gerçek aşkı yaşayabilir.",
+  "poster": "art/maisonp.jpg",
+  "cover": "art/maisond.jpg",
+  "genres": ["Bilim Kurgu", "Gizem"],
+  "year": 2026,
+  "season": "Yaz",
+  "status": "Tamamlandı",
+  "studio": "NineStream Örnek Atölyesi",
+  "format": "Dizi",
+  "language": "Sessiz örnek klip",
+  "updated": "2026-11-02",
+  "featured": true,
+  "episodes": [
+    {
+      "number": 1,
+      "title": "Gece vardiyası",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:1"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:1-low"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Yörünge",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:2"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:2-low"
+        }
+      ]
+    }
+  ]
+}

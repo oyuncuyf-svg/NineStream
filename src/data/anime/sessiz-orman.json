@@ -1,0 +1,35 @@
+{
+  "id": "ns-003",
+  "slug": "sessiz-orman",
+  "title": "Sessiz Orman",
+  "original": "Silent Forest",
+  "aliases": ["Shizuka na Mori"],
+  "description": "Ormanın sesini defterine kaydeden bir gezgin, bir sabah kuşların sustuğunu fark eder. Patikada kalan tek iz onu eski bir geçide götürür.",
+  "poster": "art/sessiz-orman-poster.webp",
+  "cover": "art/sessiz-orman-cover.webp",
+  "genres": ["Fantastik", "Macera"],
+  "year": 2025,
+  "season": "İlkbahar",
+  "status": "Tamamlandı",
+  "studio": "NineStream Örnek Atölyesi",
+  "format": "OVA",
+  "language": "Sessiz örnek klip",
+  "updated": "2026-11-01",
+  "featured": false,
+  "episodes": [
+    {
+      "number": 1,
+      "title": "Patika",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:1"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:1-low"
+        }
+      ]
+    }
+  ]
+}

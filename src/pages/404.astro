@@ -1,0 +1,19 @@
+---
+import Shell from "../layouts/Shell.astro";
+import { href } from "../lib/paths";
+---
+
+<Shell
+  path="404.html"
+  title="Sayfa bulunamadı"
+  description="Aradığın sayfa bulunamadı."
+  noindex
+>
+  <div class="page-head">
+    <small>404</small>
+    <h1>Sayfa bulunamadı</h1>
+    <a class="cta" href={href("katalog/")}>
+      Kataloğa dön →
+    </a>
+  </div>
+</Shell>

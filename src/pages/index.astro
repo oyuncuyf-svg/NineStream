@@ -1,0 +1,124 @@
+---
+import Shell from "../layouts/Shell.astro";
+import Card from "../components/Card.astro";
+import { catalog } from "../lib/catalog";
+import { href, animePath, dateTR } from "../lib/paths";
+const all = catalog(),
+  selected = all.filter((a) => a.featured),
+  features = selected.length ? selected : all.slice(0, 1);
+---
+
+<Shell
+  title="Anime izle ve keşfet"
+  description="Türkçe anime arşivinde dizileri, filmleri ve son eklenen bölümleri keşfet."
+  path=""
+>
+  <h1 class="sr">NineStream Türkçe anime arşivi</h1>
+  {features.length > 0 && (
+    <section class="hero" aria-label="Öne çıkan animeler">
+      {features.map((a, i) => (
+        <div class="slide" hidden={i !== 0}>
+          <img
+            class="backdrop"
+            src={href(a.cover)}
+            alt=""
+            width="1280"
+            height="720"
+            loading={i ? "lazy" : "eager"}
+            fetchpriority={i ? "low" : "high"}
+          />
+          <div class="hero-body">
+            <span class="eyebrow">
+              <i></i> EDİTÖR SEÇKİSİ <b>/</b> {String(i + 1).padStart(2, "0")}
+            </span>
+            <h2>{a.title}</h2>
+            <div class="tags">
+              <strong>{a.format}</strong> {a.year} <span>·</span>{" "}
+              {a.genres.join(" / ")}
+            </div>
+            <p>{a.description}</p>
+            <a class="cta" href={animePath(a.slug)}>
+              ▶　İzlemeye başla
+            </a>
+          </div>
+        </div>
+      ))}
+      {features.length > 1 && (
+        <div class="slide-nav">
+          {features.map((a, i) => (
+            <button
+              aria-label={a.title + " seçkisini göster"}
+              aria-pressed={i === 0}
+              data-slide={i}
+            >
+              {String(i + 1).padStart(2, "0")}
+            </button>
+          ))}
+        </div>
+      )}
+    </section>
+  )}
+  <div class="columns">
+    <section>
+      <div class="heading">
+        <div>
+          <small>ARŞİV</small>
+          <h2>Son güncellenenler</h2>
+        </div>
+        <a href={href("katalog/")}>Tümünü gör →</a>
+      </div>
+      <div class="grid">
+        {all.slice(0, 12).map((a) => (
+          <Card a={a} />
+        ))}
+      </div>
+      {!all.length && <p>Henüz anime eklenmedi.</p>}
+    </section>
+    <aside>
+      <div class="heading">
+        <div>
+          <small>GÜNCEL</small>
+          <h2>Bölüm akışı</h2>
+        </div>
+      </div>
+      <div class="feed">
+        {all
+          .filter((a) => a.episodes.length)
+          .slice(0, 5)
+          .map((a) => {
+            const ep = a.episodes.at(-1)!;
+            return (
+              <a href={animePath(a.slug) + "?bolum=" + ep.number}>
+                <img
+                  src={href(a.poster)}
+                  width="48"
+                  height="65"
+                  alt=""
+                  loading="lazy"
+                />
+                <div>
+                  <small>{dateTR(a.updated)}</small>
+                  <strong>{a.title}</strong>
+                  <span>{ep.number}. bölüm</span>
+                </div>
+              </a>
+            );
+          })}
+      </div>
+    </aside>
+  </div>
+</Shell>
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-slide]")
+    .forEach((btn, i, buttons) =>
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll<HTMLElement>(".slide")
+          .forEach((s, j) => (s.hidden = i !== j));
+        buttons.forEach((b, j) =>
+          b.setAttribute("aria-pressed", String(i === j)),
+        );
+      }),
+    );
+</script>

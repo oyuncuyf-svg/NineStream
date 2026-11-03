@@ -1,0 +1,49 @@
+{
+  "id": "ns-002",
+  "slug": "ay-istasyonu",
+  "title": "Ay İstasyonu",
+  "original": "Lunar Station",
+  "aliases": ["Tsuki Station"],
+  "description": "Ay’ın karanlık yüzünde nöbet tutan genç bir teknisyen, terk edilmiş istasyondan gelen bir sinyalin peşine düşer.",
+  "poster": "art/ay-istasyonu-poster.webp",
+  "cover": "art/ay-istasyonu-cover.webp",
+  "genres": ["Bilim Kurgu", "Gizem"],
+  "year": 2026,
+  "season": "Yaz",
+  "status": "Tamamlandı",
+  "studio": "NineStream Örnek Atölyesi",
+  "format": "ONA",
+  "language": "Sessiz örnek klip",
+  "updated": "2026-11-02",
+  "featured": true,
+  "episodes": [
+    {
+      "number": 1,
+      "title": "Gece vardiyası",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:1"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:1-low"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Yörünge",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:2"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:2-low"
+        }
+      ]
+    }
+  ]
+}

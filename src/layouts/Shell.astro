@@ -1,0 +1,125 @@
+---
+import { href, absolute, letters } from "../lib/paths";
+import "../styles/site.css";
+import Brand from "../components/Brand.astro";
+import { catalog } from "../lib/catalog";
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+  schema?: object[];
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  path,
+  image,
+  schema = [],
+  noindex = false,
+} = Astro.props;
+const canonical = absolute(href(path)),
+  cardImage = image ?? catalog()[0]?.cover;
+const nav = [
+  ["", "Ana sayfa"],
+  ["katalog/", "Katalog"],
+  ["favoriler/", "Listem"],
+];
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · NineStream</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title + " · NineStream"} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="NineStream" />
+    {cardImage && (
+      <meta property="og:image" content={absolute(href(cardImage))} />
+    )}
+    <meta name="twitter:card" content="summary_large_image" />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <link rel="icon" href={href("simge.svg")} />
+    {schema.length > 0 && (
+      <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": schema,
+        }).replace(/</g, "\\u003c")}
+      />
+    )}
+  </head>
+  <body data-base={href()}>
+    <a class="skip" href="#icerik">
+      İçeriğe geç
+    </a>
+    <header class="bar">
+      <div class="wrap top">
+        <Brand />
+        <nav aria-label="Ana menü">
+          {nav.map(([link, label]) => (
+            <a
+              href={href(link)}
+              aria-current={link === path ? "page" : undefined}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+        <form class="search" role="search" action={href("katalog/")}>
+          <label class="sr" for="global-q">
+            Anime ara
+          </label>
+          <input
+            id="global-q"
+            type="search"
+            name="q"
+            placeholder="Anime ara…"
+          />
+          <button aria-label="Ara">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <circle cx="10" cy="10" r="6.5" />
+              <path d="m15 15 6 6" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </header>
+    <main id="icerik" class="wrap">
+      <slot />
+    </main>
+    <footer>
+      <div class="wrap">
+        <div class="alphabet">
+          <strong>A–Z</strong>
+          {letters.map((l) => (
+            <a href={href("katalog/?harf=" + encodeURIComponent(l))}>{l}</a>
+          ))}
+        </div>
+        <div class="foot">
+          <Brand />
+          <span>Türkçe anime arşivi</span>
+          <a href={href("katalog/")}>Kataloğa göz at ↗</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

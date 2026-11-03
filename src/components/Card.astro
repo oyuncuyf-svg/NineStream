@@ -1,0 +1,30 @@
+---
+import type { Anime } from "../lib/model";
+import { href, animePath } from "../lib/paths";
+interface Props {
+  a: Anime;
+}
+const { a } = Astro.props;
+---
+
+<article class="card" data-id={a.id}>
+  <a href={animePath(a.slug)}>
+    <div class="poster">
+      <img
+        src={href(a.poster)}
+        width="480"
+        height="720"
+        alt={a.title + " afişi"}
+        loading="lazy"
+      />
+      <span class="format" data-type={a.format}>
+        {a.format}
+      </span>
+      <span class="total">{a.episodes.length} bölüm</span>
+    </div>
+    <h3>{a.title}</h3>
+    <p>
+      {a.year} <span>·</span> {a.genres[0]}
+    </p>
+  </a>
+</article>

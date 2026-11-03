@@ -1,0 +1,28 @@
+---
+import { config } from "../lib/catalog";
+import { href } from "../lib/paths";
+interface Props {
+  id: string;
+  canonical: string;
+}
+const { id, canonical } = Astro.props;
+---
+
+<section class="panel comments" aria-labelledby="yorumlar">
+  <small>TOPLULUK</small>
+  <h2 id="yorumlar">Yorumlar</h2>
+  <div
+    id="graphcomment"
+    data-shortname={config.graphcommentShortname}
+    data-uid={"ninestream-" + id}
+    data-url={canonical}
+  ></div>
+  <p id="yorum-durumu" role="status">
+    {config.graphcommentShortname
+      ? "Yorumlar yükleniyor…"
+      : "Yorumlar henüz açılmadı."}
+  </p>
+</section>
+<script>
+  import "../scripts/comments.js";
+</script>

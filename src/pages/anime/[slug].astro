@@ -1,0 +1,200 @@
+---
+import Shell from "../../layouts/Shell.astro";
+import Comments from "../../components/Comments.astro";
+import { catalog, config } from "../../lib/catalog";
+import type { Anime } from "../../lib/model";
+import { href, animePath, absolute, dateTR } from "../../lib/paths";
+export function getStaticPaths() {
+  return catalog().map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+interface Props {
+  a: Anime;
+}
+const { a } = Astro.props,
+  canonical = absolute(animePath(a.slug)),
+  film = a.format === "Film";
+const schema: object[] = [
+  {
+    "@type": film ? "Movie" : "TVSeries",
+    "@id": canonical + "#eser",
+    name: a.title,
+    alternateName: [a.original, ...a.aliases],
+    description: a.description,
+    image: absolute(href(a.cover)),
+    genre: a.genres,
+    url: canonical,
+    productionCompany: { "@type": "Organization", name: a.studio },
+  },
+  {
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      ["Ana sayfa", absolute(href())],
+      ["Katalog", absolute(href("katalog/"))],
+      [a.title, canonical],
+    ].map(([name, item], i) => ({
+      "@type": "ListItem",
+      name,
+      item,
+      position: i + 1,
+    })),
+  },
+];
+for (const ep of a.episodes) {
+  if (!ep.video) continue;
+  const server = ep.servers.find((s) => s.url.startsWith("https://"));
+  if (server)
+    schema.push({
+      "@type": "VideoObject",
+      name: a.title + " · " + ep.title,
+      description: ep.video.description,
+      uploadDate: ep.video.uploadDate,
+      thumbnailUrl: absolute(href(a.cover)),
+      embedUrl: server.url,
+      isPartOf: { "@id": canonical + "#eser" },
+    });
+}
+---
+
+<Shell
+  title={a.title + " izle"}
+  description={a.description}
+  path={"anime/" + a.slug + "/"}
+  image={a.cover}
+  schema={schema}
+>
+  <nav class="crumb" aria-label="Sayfa yolu">
+    <a href={href()}>Ana sayfa</a> › <a href={href("katalog/")}>Katalog</a> ›{" "}
+    {a.title}
+  </nav>
+  <div class="detail">
+    <img
+      src={href(a.poster)}
+      alt={a.title + " afişi"}
+      width="128"
+      height="192"
+    />
+    <div>
+      <small>
+        {a.format.toLocaleUpperCase("tr")}　/　{a.year}
+      </small>
+      <h1>{a.title}</h1>
+      <em>{a.original}</em>
+      <p>{a.description}</p>
+      <div class="pills">
+        {a.genres.map((g) => (
+          <a href={href("katalog/?genre=" + encodeURIComponent(g))}>{g}</a>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="watch-columns">
+    <section
+      class="panel player"
+      id="oynat"
+      data-config={JSON.stringify({
+        id: a.id,
+        episodes: a.episodes,
+        rules: config.embedRules,
+      })}
+    >
+      <small>GÖSTERİM</small>
+      <h2 id="ep-title">Bölüm oynatıcı</h2>
+      <div id="screen">
+        <span id="screen-message" role="status">
+          Oynatıcı hazırlanıyor…
+        </span>
+      </div>
+      <noscript>
+        Oynatıcı ve bölüm seçimi için JavaScript’i etkinleştir.
+      </noscript>
+      <div class="tools">
+        <button id="prev">← Önceki</button>
+        <button id="next">Sonraki →</button>
+        <button id="watched" aria-pressed="false">
+          İzlendi işaretle
+        </button>
+      </div>
+      <h3>Video sunucuları</h3>
+      <div class="tools" id="servers"></div>
+      <p id="sample-note" hidden>
+        Bu kaynakta beş saniyelik, sessiz bir örnek klip oynatılır.
+      </p>
+      <div class="tools view-tools">
+        <button id="wide" aria-pressed="false">
+          Geniş görünüm
+        </button>
+        <button id="dim" aria-pressed="false">
+          Işıkları kıs
+        </button>
+        <a href="#yorumlar">Yorumlara git ↓</a>
+      </div>
+      <details>
+        <summary>Video açılmıyor mu?</summary>
+        <p>
+          Başka bir sunucu seçebilir veya kaynağı kendi sayfasında açabilirsin.
+          Bazı sağlayıcılar gömülü oynatmayı engeller.
+        </p>
+        <a hidden id="source" target="_blank" rel="noopener noreferrer">
+          Kaynağı yeni sekmede aç ↗
+        </a>
+      </details>
+      <div id="downloads" hidden>
+        <h3>İndirmeler</h3>
+        <div class="tools"></div>
+      </div>
+    </section>
+    <aside class="panel ep-panel">
+      <small>İZLEME LİSTESİ</small>
+      <h2>
+        Bölümler <span>{a.episodes.length}</span>
+      </h2>
+      <div id="episodes">
+        {a.episodes.map((ep) => (
+          <button data-number={ep.number}>
+            <b>{String(ep.number).padStart(2, "0")}</b> {ep.title}
+          </button>
+        ))}
+      </div>
+      <button id="favorite" aria-pressed="false">
+        ＋ Favorilere ekle
+      </button>
+      <p data-storage-note>İzleme listen bu tarayıcıda saklanır.</p>
+    </aside>
+  </div>
+  <section class="panel info">
+    <h2>Yapım bilgileri</h2>
+    <dl>
+      {[
+        ["Stüdyo", a.studio],
+        ["Sezon", a.season + " " + a.year],
+        ["Durum", a.status],
+        ["Dil", a.language],
+        ["Güncelleme", dateTR(a.updated)],
+        ["Diğer adlar", a.aliases.join(", ") || "—"],
+      ].map(([k, v]) => (
+        <div>
+          <dt>{k}</dt>
+          <dd>{v}</dd>
+        </div>
+      ))}
+    </dl>
+    {a.nextRelease && (
+      <p>
+        Sonraki bölüm için tahminî yayın{" "}
+        <time datetime={a.nextRelease}>
+          {new Intl.DateTimeFormat("tr-TR", {
+            dateStyle: "long",
+            timeStyle: "short",
+            timeZone: "Europe/Istanbul",
+          }).format(new Date(a.nextRelease))}{" "}
+          (TSİ)
+        </time>{" "}
+        <span id="countdown" data-date={a.nextRelease}></span>
+      </p>
+    )}
+  </section>
+  <Comments id={a.id} canonical={canonical} />
+  <script>
+    import "../../scripts/player.js";
+  </script>
+</Shell>

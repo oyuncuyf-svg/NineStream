@@ -1,0 +1,13 @@
+{
+  "graphcommentShortname": "",
+  "embedRules": [
+    {
+      "host": "www.youtube-nocookie.com",
+      "path": "/embed/"
+    },
+    {
+      "host": "player.vimeo.com",
+      "path": "/video/"
+    }
+  ]
+}

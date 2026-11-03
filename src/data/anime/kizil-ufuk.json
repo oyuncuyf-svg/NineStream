@@ -1,0 +1,63 @@
+{
+  "id": "ns-001",
+  "slug": "kizil-ufuk",
+  "title": "Kızıl Ufuk",
+  "original": "Crimson Horizon",
+  "aliases": ["Akai Sora"],
+  "description": "Gökyüzündeki son posta gemisinin çırağı Leyla, yıllardır boş sandığı bir rotadan çağrı alır. Gün batmadan kayıp limanın izini bulmalıdır.",
+  "poster": "art/kizil-ufuk-poster.webp",
+  "cover": "art/kizil-ufuk-cover.webp",
+  "genres": ["Macera", "Fantastik"],
+  "year": 2026,
+  "season": "Sonbahar",
+  "status": "Devam ediyor",
+  "studio": "NineStream Örnek Atölyesi",
+  "format": "Dizi",
+  "language": "Sessiz örnek klip",
+  "updated": "2026-11-03",
+  "featured": true,
+  "episodes": [
+    {
+      "number": 1,
+      "title": "Son posta gemisi",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:1"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:1-low"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Bulutların ötesi",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:2"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:2-low"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Kayıp liman",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:3"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:3-low"
+        }
+      ]
+    }
+  ]
+}

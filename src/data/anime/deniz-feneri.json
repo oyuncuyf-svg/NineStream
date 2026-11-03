@@ -1,0 +1,35 @@
+{
+  "id": "ns-004",
+  "slug": "deniz-feneri",
+  "title": "Deniz Feneri",
+  "original": "The Lighthouse",
+  "aliases": ["Umi no Akari"],
+  "description": "Fener bekçisinin kızı, sisin örttüğü kıyıda bir mektup bulur. Gelgit yükselmeden mektubu sahibine ulaştırmak için yola çıkar.",
+  "poster": "art/deniz-feneri-poster.webp",
+  "cover": "art/deniz-feneri-cover.webp",
+  "genres": ["Dram", "Macera"],
+  "year": 2024,
+  "season": "Kış",
+  "status": "Tamamlandı",
+  "studio": "NineStream Örnek Atölyesi",
+  "format": "Film",
+  "language": "Sessiz örnek klip",
+  "updated": "2026-11-01",
+  "featured": false,
+  "episodes": [
+    {
+      "number": 1,
+      "title": "Deniz Feneri",
+      "servers": [
+        {
+          "name": "Standart",
+          "url": "sample:1"
+        },
+        {
+          "name": "Düşük veri",
+          "url": "sample:1-low"
+        }
+      ]
+    }
+  ]
+}

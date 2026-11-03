@@ -1,0 +1,55 @@
+---
+import Shell from "../layouts/Shell.astro";
+import { catalog } from "../lib/catalog";
+import { href, animePath } from "../lib/paths";
+const all = catalog();
+---
+
+<Shell
+  title="İzleme listem"
+  description="Favori animelerin ve kaldığın bölümler."
+  path="favoriler/"
+  noindex
+>
+  <div class="page-head">
+    <small>KİŞİSEL ARŞİV</small>
+    <h1>İzleme listem</h1>
+    <p data-storage-note>
+      Listen bu tarayıcıda saklanır. Cihazlar arasında otomatik eşitlenmez.
+    </p>
+  </div>
+  {[
+    ["devam", "İzlemeye devam et"],
+    ["favori", "Favorilerim"],
+  ].map(([key, label]) => (
+    <section class="shelf" data-shelf={key}>
+      <h2>{label}</h2>
+      <p class="empty">Listen henüz boş.</p>
+      <div class="list-rows">
+        {all.map((a) => (
+          <article
+            hidden
+            data-id={a.id}
+            data-episodes={JSON.stringify(a.episodes.map((e) => e.number))}
+          >
+            <img
+              src={href(a.poster)}
+              alt=""
+              width="50"
+              height="72"
+              loading="lazy"
+            />
+            <a href={animePath(a.slug)}>
+              {a.title} <small></small>
+            </a>
+            {key === "favori" && <button>Favorilerden çıkar</button>}
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+  <button id="temizle">Tüm izleme verilerimi temizle</button>
+  <script>
+    import "../scripts/library.js";
+  </script>
+</Shell>

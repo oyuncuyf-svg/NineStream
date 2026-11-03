@@ -1,0 +1,58 @@
+---
+import { href } from "../lib/paths";
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Örnek klip · NineStream</title>
+    <style>
+      html,
+      body,
+      video {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: #101010;
+        color: white;
+      }
+      video {
+        display: block;
+      }
+      p {
+        position: absolute;
+        top: 0;
+        font: 16px system-ui;
+      }
+    </style>
+  </head>
+  <body data-base={href()}>
+    <video
+      controls
+      playsinline
+      preload="metadata"
+      aria-label="Sessiz örnek klip"
+    ></video>
+    <p role="status"></p>
+    <script>
+      const clip = new URLSearchParams(location.search).get("klip") || "";
+      const video = document.querySelector("video")!;
+      const message = document.querySelector("p")!;
+      if (/^[1-3](-low)?$/.test(clip)) {
+        const posters = ["kizil-ufuk", "ay-istasyonu", "sessiz-orman"];
+        video.poster =
+          document.body.dataset.base +
+          "art/" +
+          posters[Number(clip[0]) - 1] +
+          "-cover.webp";
+        video.src = document.body.dataset.base + "media/" + clip + ".mp4";
+        video.onerror = () => (message.textContent = "Örnek klip okunamadı.");
+      } else {
+        message.textContent = "Klip bulunamadı.";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+---
+import Shell from "../layouts/Shell.astro";
+import Card from "../components/Card.astro";
+import { catalog } from "../lib/catalog";
+import { href, letters } from "../lib/paths";
+const all = catalog();
+const sets = [
+  [
+    "genre",
+    "Tür",
+    [...new Set(all.flatMap((a) => a.genres))].sort((a, b) =>
+      a.localeCompare(b, "tr"),
+    ),
+  ],
+  ["year", "Yıl", [...new Set(all.map((a) => "" + a.year))].sort().reverse()],
+  ["status", "Yayın durumu", [...new Set(all.map((a) => a.status))]],
+  ["format", "Yapım türü", ["Dizi", "Film", "OVA", "ONA"]],
+  ["harf", "Baş harf", letters],
+] as const;
+---
+
+<Shell
+  title="Anime kataloğu"
+  description="Tür, yıl ve yayın durumuna göre Türkçe anime kataloğunda ara."
+  path="katalog/"
+>
+  <div class="page-head">
+    <small>KEŞFET</small>
+    <h1>Anime kataloğu</h1>
+  </div>
+  <form class="filters" id="filtre">
+    <label>
+      Anime adı
+      <input type="search" name="q" placeholder="Türkçe veya orijinal ad" />
+    </label>
+    {sets.map(([key, label, opts]) => (
+      <label>
+        {label}
+        <select name={key}>
+          <option value="">Tümü</option>
+          {opts.map((o) => (
+            <option>{o}</option>
+          ))}
+        </select>
+      </label>
+    ))}
+    <label>
+      Sıralama
+      <select name="sort">
+        <option value="updated">Son güncellenen</option>
+        <option value="az">A–Z</option>
+      </select>
+    </label>
+    <button type="reset">Temizle</button>
+  </form>
+  <p id="sayac" aria-live="polite">
+    {all.length} yapım
+  </p>
+  <div class="grid catalog" id="sonuclar">
+    {all.map((a) => (
+      <Card a={a} />
+    ))}
+  </div>
+  <p hidden id="bos">
+    Eşleşen yapım bulunamadı. Farklı bir ad veya filtre dene.
+  </p>
+  <div
+    id="index-data"
+    hidden
+    data-json={JSON.stringify(
+      all.map(
+        ({
+          id,
+          title,
+          original,
+          aliases,
+          genres,
+          year,
+          status,
+          format,
+          updated,
+        }) => ({
+          id,
+          title,
+          original,
+          aliases,
+          genres,
+          year,
+          status,
+          format,
+          updated,
+        }),
+      ),
+    )}
+  />
+  <script>
+    import "../scripts/catalog.js";
+  </script>
+</Shell>

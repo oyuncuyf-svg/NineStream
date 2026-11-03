@@ -5,8 +5,8 @@
   "original": "Lunar Station",
   "aliases": ["Tsuki Station"],
   "description": "Ay’ın karanlık yüzünde nöbet tutan genç bir teknisyen, terk edilmiş istasyondan gelen bir sinyalin peşine düşer.",
-  "poster": "art/ay-istasyonu-poster.webp",
-  "cover": "art/ay-istasyonu-cover.webp",
+  "poster": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiNyEfEx7Zdn7YgfTsuy_H0GfdHXl9Rw0lE9UFh1yGP7QAN-sA5bwmCbb1_n91P9327jBzfixJNP2iNm9QDvYZ6vJf5vLevMgA_5BNWhVHs_ywLGoHrwZrtMTs3MPle_S1k1ECeVGAjL6pq1xv3ANtvgq7gyZu63O_ZPtLvB_Vw7WAm_w/s1600/157274.jpg",
+  "cover": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgM40UVaGY-ckzv4BCrvRxGEZPveSDFkQwgy1cf_WouAMh3gCyrGbNXTVEQ6VCWq2SrQrDOqx-8cIYDgTfh7vkhW5e2BNACxzBORqTRtdClZM7XDH3yYoGwAc1r2Ztxl6K44HOs8tQsJlNB_l_54IWO0o9C8AcJFsjVOiRyLOlR4CYvOQ/s1600/maxresdefault.jpg",
   "genres": ["Bilim Kurgu", "Gizem"],
   "year": 2026,
   "season": "Yaz",
@@ -38,7 +38,7 @@
         {
           "name": "Standart",
           "url": "sample:2"
-        },
+        },        
         {
           "name": "Düşük veri",
           "url": "sample:2-low"
